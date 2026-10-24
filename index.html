@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dharshana & Manikandan — Wedding Invitation</title>
+  
+  <!-- Premium Google Fonts including Authentic Tamil Serif Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Cormorant+Garamond:ital,wght@0,500;0,700;1,500&family=Noto+Serif+Tamil:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #fdfaf6;
+      --card-bg: #ffffff;
+      --card-accent: #f8f4ee;
+      --text-dark: #1e1b18;
+      --text-muted: #59534c;
+      --gold: #b28135;
+      --gold-dark: #825a1b;
+      --gold-light: #f5eedf;
+      --border: #e9e0d2;
+      --font-display: 'Cinzel', serif;
+      --font-serif: 'Cormorant Garamond', Georgia, serif;
+      --font-tamil: 'Noto Serif Tamil', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg);
+      color: var(--text-dark);
+      font-family: var(--font-sans);
+      line-height: 1.65;
+      text-align: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .tamil-text {
+      font-family: var(--font-tamil);
+      letter-spacing: 0.3px;
+    }
+
+    /* Floating Petals Canvas */
+    #petalsCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 50;
+    }
+
+    /* 1. Opening Cover Envelope */
+    #introOverlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #ffffff 0%, var(--bg) 100%);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #introOverlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+    .intro-card {
+      border: 2px solid var(--gold);
+      background: #ffffff;
+      padding: 44px 24px;
+      border-radius: 20px;
+      max-width: 440px;
+      width: 100%;
+      box-shadow: 0 20px 45px rgba(178, 129, 53, 0.12);
+      outline: 6px solid #ffffff;
+    }
+    .intro-monogram {
+      font-family: var(--font-display);
+      font-size: 2.2rem;
+      letter-spacing: 6px;
+      color: var(--gold);
+      display: block;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    .intro-card h1 {
+      font-family: var(--font-tamil);
+      font-size: 1.85rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text-dark);
+      margin: 12px 0;
+    }
+    .enter-btn {
+      display: inline-block;
+      margin-top: 18px;
+      padding: 14px 38px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
+      color: #ffffff;
+      border: none;
+      border-radius: 50px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 6px 20px rgba(178, 129, 53, 0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .enter-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(178, 129, 53, 0.45);
+    }
+
+    /* 2. Sticky Header */
+    header {
+      position: sticky;
+      top: 0;
+      background: rgba(253, 250, 246, 0.96);
+      backdrop-filter: blur(10px);
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      color: var(--gold-dark);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: 2px;
+    }
+    nav a {
+      color: var(--text-dark);
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 0.85rem;
+      margin-left: 18px;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: var(--gold); }
+
+    /* 3. Hero Section */
+    .hero {
+      padding: 50px 20px 40px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .hero-photo-wrap {
+      width: 100%;
+      max-width: 440px;
+      height: 380px;
+      margin: 0 auto 30px;
+      border-radius: 220px 220px 24px 24px;
+      overflow: hidden;
+      border: 4px solid #ffffff;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+      background: var(--card-accent);
+    }
+    .hero-photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-sub {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .hero-names {
+      font-family: var(--font-serif);
+      font-size: clamp(2.3rem, 6vw, 3.6rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero-names span { 
+      display: block; 
+      font-size: 1.5rem; 
+      color: var(--gold); 
+      font-weight: 500;
+      font-style: italic;
+    }
+
+    /* Sections */
+    section {
+      padding: 65px 20px;
+      max-width: 740px;
+      margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-dark);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4.5vw, 2.7rem);
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 16px;
+      line-height: 1.25;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.85;
+      margin-bottom: 24px;
+    }
+
+    /* Scratch Card */
+    .scratch-outer {
+      position: relative;
+      width: 320px;
+      height: 190px;
+      margin: 28px auto 12px;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(178, 129, 53, 0.15);
+      background: #ffffff;
+      border: 2px solid var(--gold-light);
+    }
+    .scratch-secret {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: radial-gradient(circle, #fff 0%, var(--card-accent) 100%);
+    }
+    .scratch-secret h4 {
+      font-family: var(--font-tamil);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--gold-dark);
+      margin: 4px 0;
+    }
+    canvas#scratchCard {
+      position: absolute;
+      inset: 0;
+      touch-action: none;
+      cursor: crosshair;
+    }
+
+    /* Countdown */
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 32px auto 10px;
+    }
+    .countdown-item {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 16px 14px;
+      border-radius: 14px;
+      min-width: 74px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.03);
+    }
+    .countdown-item span {
+      display: block;
+      font-size: 1.7rem;
+      font-weight: 700;
+      font-family: var(--font-serif);
+      color: var(--text-dark);
+    }
+    .countdown-item label {
+      font-size: 0.68rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--gold-dark);
+      font-weight: 600;
+    }
+
+    /* Event Cards */
+    .timeline-container {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      margin-top: 26px;
+      text-align: left;
+    }
+    .timeline-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-left: 5px solid var(--gold);
+      padding: 26px 22px;
+      border-radius: 16px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+    }
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .day-badge {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 24px;
+    }
+    .gallery-item {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+      background: var(--card-accent);
+      border: 2px solid #ffffff;
+      transition: transform 0.25s ease;
+    }
+    .gallery-item:hover { transform: scale(1.02); }
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Lightbox Modal */
+    #imageModal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 14, 12, 0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 3000;
+      padding: 20px;
+    }
+    #imageModal img {
+      max-width: 90%;
+      max-height: 80vh;
+      border-radius: 12px;
+      border: 3px solid #ffffff;
+    }
+
+    /* Action Buttons */
+    .action-btn {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 12px 28px;
+      background: var(--text-dark);
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: var(--gold);
+      color: #fff;
+    }
+
+    /* Venue Cards */
+    .venue-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      padding: 28px 20px;
+      border-radius: 16px;
+      margin-top: 20px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+    }
+
+    /* Audio Disk */
+    #audioToggle {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #ffffff;
+      border: 2px solid var(--gold);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(178, 129, 53, 0.25);
+      z-index: 1500;
+      font-size: 1.3rem;
+    }
+    #audioToggle.playing {
+      animation: spinMusic 4s linear infinite;
+    }
+    @keyframes spinMusic {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    footer {
+      padding: 48px 20px;
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Falling Petals -->
+  <canvas id="petalsCanvas"></canvas>
+
+  <!-- 1. ENVELOPE / ENTRANCE POPUP -->
+  <div id="introOverlay">
+    <div class="intro-card">
+      <span class="intro-monogram">M & D</span>
+      <p class="tamil-text" style="font-size: 0.76rem; color: var(--gold-dark); font-weight: 700; line-height: 1.5;">
+        ஸ்ரீ மகுடேஸ்வரன் துணை · ஸ்ரீ கோட்டை மாரியம்மன் துணை · ஸ்ரீ அங்காளபரமேஸ்வரி துணை[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)
+      </p>
+      <h1 class="tamil-text">திருமண அழைப்பிதழ்[span_4](start_span)[span_4](end_span)</h1>
+      <p class="tamil-text" style="font-size: 1.35rem; font-weight: 700; color: var(--text-dark); margin: 6px 0;">
+        S. மணிகண்டன் & A. தர்ஷனா[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)
+      </p>
+      <p class="tamil-text" style="font-weight: 700; color: var(--gold-dark); letter-spacing: 1px;">20 · நவம்பர் · 2026[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)</p>
+      <button class="enter-btn" id="openInviteBtn">Open Invitation ✦</button>
+    </div>
+  </div>
+
+  <!-- 2. STICKY NAV -->
+  <header>
+    <a href="#home" class="nav-logo">M & D</a>
+    <nav>
+      <a href="#celebration">The Day</a>
+      <a href="#agenda">Events</a>
+      <a href="#gallery">Moments</a>
+      <a href="#venue">Venues</a>
+    </nav>
+  </header>
+
+  <main id="home">
+    <!-- 3. HERO SECTION -->
+    <section class="hero">
+      <div class="hero-photo-wrap">
+        <img id="mainCoupleImg" src="couple.jpg" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" alt="Manikandan & Dharshana" />
+      </div>
+      <p class="hero-sub tamil-text">நிகழும் மங்களகரமான சுபயோக சுபதினத்தில்[span_9](start_span)[span_9](end_span)[span_10](start_span)[span_10](end_span)</p>
+      <h1 class="hero-names">
+        S. Manikandan <span style="font-size: 1.15rem; color: var(--text-muted); font-family: var(--font-sans);">(B.Sc., MBA)</span>[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)
+        <span>&</span>
+        A. Dharshana <span style="font-size: 1.15rem; color: var(--text-muted); font-family: var(--font-sans);">(B.Tech., CSBS)</span>[span_13](start_span)[span_13](end_span)[span_14](start_span)[span_14](end_span)
+      </h1>
+      <p class="tamil-text" style="font-size: 1.15rem; font-weight: 700; color: var(--gold-dark); margin-top: 6px;">
+        திருமணம் மற்றும் திருமண வரவேற்பு அழைப்பிதழ்[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)
+      </p>
+      <p class="hero-date-venue tamil-text" style="margin-top: 8px;">
+        <strong style="color: var(--text-dark); font-size: 1.1rem;">வெள்ளிக்கிழமை, 20 நவம்பர் 2026</strong><br>[span_17](start_span)[span_17](end_span)[span_18](start_span)[span_18](end_span)
+        <span style="color: var(--text-muted);">திண்டுக்கல்[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)</span>
+      </p>
+      <div style="margin-top: 18px;">
+        <a class="action-btn" target="_blank" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Wedding+of+Manikandan+%26+Dharshana&dates=20261120T033000Z/20261120T163000Z&details=Wedding+Muhurtham+and+Reception+Celebrations&location=Dindigul,+Tamil+Nadu">
+          📅 Add to Calendar
+        </a>
+      </div>
+    </section>
+
+    <!-- 4. INVITATION NOTE -->
+    <section>
+      <div style="font-size: 1.8rem; margin-bottom: 8px; color: var(--gold);">✿</div>
+      <p class="section-eyebrow tamil-text">அன்புடையீர்[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)!</p>
+      <h2 class="section-title tamil-text">சுபயோக <em>சுபதினம்[span_23](start_span)[span_23](end_span)[span_24](start_span)[span_24](end_span)</em></h2>
+      <p class="section-desc tamil-text" style="font-size: 1.1rem; max-width: 620px; margin: 0 auto 20px; font-weight: 600; color: var(--text-dark);">
+        தாங்கள் தங்கள் சுற்றமும் நட்பும் சூழ வருகை தந்து மணமக்களை வாழ்த்தியருள அன்புடன் அழைக்கின்றோம்.[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)
+      </p>
+      <p class="tamil-text" style="font-size: 1.25rem; font-weight: 700; color: var(--gold-dark);">
+        — மணமக்கள் & குடும்பத்தினர்[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span)
+      </p>
+    </section>
+
+    <!-- 5. SCRATCH CARD & COUNTDOWN -->
+    <section id="celebration">
+      <p class="section-eyebrow">Interactive Card</p>
+      <h2 class="section-title">The day our<br><em>forever begins.</em></h2>
+      <p class="section-desc tamil-text" style="font-size: 1rem;">கீழே உள்ள தங்கக் கார்டை விரலால் தேய்த்து தேதியை பார்க்கவும்.</p>
+
+      <div class="scratch-outer">
+        <div class="scratch-secret">
+          <span style="color: var(--gold); font-size: 1.3rem;">✿</span>
+          <p class="tamil-text" style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gold-dark); font-weight: 700;">திருமண முகூர்த்தம்[span_29](start_span)[span_29](end_span)</p>
+          <h4 class="tamil-text">20 நவம்பர் 2026</h4>[span_30](start_span)[span_30](end_span)[span_31](start_span)[span_31](end_span)
+          <p class="tamil-text" style="font-size: 0.95rem; font-weight: 700; color: var(--text-dark);">காலை 9:00 மணி முதல் 10:00 மணிக்குள்[span_32](start_span)[span_32](end_span)</p>
+          <p class="tamil-text" style="font-size: 0.85rem; color: var(--text-muted);">ஸ்ரீ சௌந்தரராஜ பெருமாள் திருக்கோயில், தாடிக்கொம்பு</p>
+        </div>
+        <canvas id="scratchCard" width="320" height="190"></canvas>
+      </div>
+      <p style="font-size: 0.78rem; color: var(--gold-dark); font-weight: 600; margin-top: 6px;">Scratch gently to reveal ✦</p>
+
+      <!-- Countdown -->
+      <div class="countdown-grid">
+        <div class="countdown-item"><span id="days">—</span><label>Days</label></div>
+        <div class="countdown-item"><span id="hours">—</span><label>Hours</label></div>
+        <div class="countdown-item"><span id="minutes">—</span><label>Mins</label></div>
+        <div class="countdown-item"><span id="seconds">—</span><label>Secs</label></div>
+      </div>
+    </section>
+
+    <!-- 6. EVENTS SCHEDULE -->
+    <section id="agenda">
+      <p class="section-eyebrow tamil-text">நிகழ்ச்சி நிரல்</p>
+      <h2 class="section-title">Wedding<br><em>Celebrations</em></h2>
+
+      <div class="timeline-container">
+        <!-- Muhurtham -->
+        <article class="timeline-card">
+          <div class="timeline-header">
+            <span class="day-badge">01</span>
+            <div>
+              <p class="tamil-text" style="font-size: 0.82rem; color: var(--gold-dark); font-weight: 700;">முகூர்த்த சுபதினம்[span_33](start_span)[span_33](end_span)</p>
+              <h3 class="tamil-text" style="font-size: 1.45rem; font-weight: 700;">திருமண முகூர்த்தம்[span_34](start_span)[span_34](end_span)</h3>
+            </div>
+          </div>
+          <div class="tamil-text" style="font-size: 0.98rem;">
+            <p style="color: var(--gold-dark); font-weight: 700; letter-spacing: 0.5px;">⏰ காலை 9.00 மணிக்கும் மேல் 10.00 மணிக்குள்[span_35](start_span)[span_35](end_span)</p>
+            <h5 style="font-size: 1.18rem; font-weight: 700; margin: 4px 0; color: var(--text-dark);">ஸ்ரீ சௌந்தரராஜ பெருமாள் திருக்கோயில்</h5>
+            <p style="color: var(--text-muted);">தாடிக்கொம்பு, திண்டுக்கல்.</p>
+          </div>
+        </article>
+
+        <!-- Reception -->
+        <article class="timeline-card">
+          <div class="timeline-header">
+            <span class="day-badge">02</span>
+            <div>
+              <p class="tamil-text" style="font-size: 0.82rem; color: var(--gold-dark); font-weight: 700;">வரவேற்பு சுபதினம்[span_36](start_span)[span_36](end_span)[span_37](start_span)[span_37](end_span)</p>
+              <h3 class="tamil-text" style="font-size: 1.45rem; font-weight: 700;">திருமண வரவேற்பு[span_38](start_span)[span_38](end_span)[span_39](start_span)[span_39](end_span)</h3>
+            </div>
+          </div>
+          <div class="tamil-text" style="font-size: 0.98rem;">
+            <p style="color: var(--gold-dark); font-weight: 700; letter-spacing: 0.5px;">⏰ மாலை 6.00 மணி முதல்[span_40](start_span)[span_40](end_span)[span_41](start_span)[span_41](end_span)</p>
+            <h5 style="font-size: 1.18rem; font-weight: 700; margin: 4px 0; color: var(--text-dark);">தரகுமண்டி குமாஸ்தாக்கள் திருமண மண்டபம்[span_42](start_span)[span_42](end_span)[span_43](start_span)[span_43](end_span)</h5>
+            <p style="color: var(--text-muted);">நந்தவனரோடு, திண்டுக்கல்.[span_44](start_span)[span_44](end_span)[span_45](start_span)[span_45](end_span)</p>
+          </div>
+        </article>
+
+        <!-- Families Card -->
+        <article class="timeline-card" style="border-left-color: #2b2825;">
+          <div class="timeline-header">
+            <span class="day-badge" style="color: var(--text-dark);">✿</span>
+            <div>
+              <p class="tamil-text" style="font-size: 0.82rem; color: var(--gold-dark); font-weight: 700;">அன்புடன் அழைக்கும் குடும்பத்தினர்[span_46](start_span)[span_46](end_span)[span_47](start_span)[span_47](end_span)</p>
+              <h3 class="tamil-text" style="font-size: 1.45rem; font-weight: 700;">இருவீட்டார் விவரம்</h3>
+            </div>
+          </div>
+          <div class="tamil-text" style="font-size: 0.98rem; line-height: 1.9; color: var(--text-dark);">
+            <p><strong>தங்கள் அன்புள்ள (மணமகன் வீட்டார்):</strong><br>[span_48](start_span)[span_48](end_span)[span_49](start_span)[span_49](end_span)
+            M. சரவணன் - S. மோகனா<br>[span_50](start_span)[span_50](end_span)[span_51](start_span)[span_51](end_span)
+            S. அருண்கிரி<br>[span_52](start_span)[span_52](end_span)[span_53](start_span)[span_53](end_span)
+            EB காலனி, திண்டுக்கல்.[span_54](start_span)[span_54](end_span)[span_55](start_span)[span_55](end_span)</p>
+
+            <p style="margin-top: 14px;"><strong>அவ்வண்ணமே கோரும் (மணமகள் வீட்டார்):</strong><br>[span_56](start_span)[span_56](end_span)[span_57](start_span)[span_57](end_span)
+            G. ஆறுமுகம் - A. ஆனந்தலெட்சுமி<br>[span_58](start_span)[span_58](end_span)[span_59](start_span)[span_59](end_span)
+            A. பாலகணேசன் B.E., MBA[span_60](start_span)[span_60](end_span)[span_61](start_span)[span_61](end_span)<br>
+            ராஜலெட்சுமி நகர், திண்டுக்கல்.[span_62](start_span)[span_62](end_span)[span_63](start_span)[span_63](end_span)</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 7. PHOTO GALLERY -->
+    <section id="gallery">
+      <p class="section-eyebrow">Our Moments</p>
+      <h2 class="section-title">Memories to<br><em>treasure forever.</em></h2>
+      <p class="section-desc">Tap any photograph to view it closer.</p>
+
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="couple.jpg" onerror="this.src='https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80'" alt="Couple Moment 1" />
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="photo2.jpg" onerror="this.src='https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80'" alt="Couple Moment 2" />
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="photo3.jpg" onerror="this.src='https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=800&q=80'" alt="Couple Moment 3" />
+        </div>
+        <div class="gallery-item" onclick="openLightbox(this)">
+          <img src="photo4.jpg" onerror="this.src='https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&w=800&q=80'" alt="Couple Moment 4" />
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. VENUES & MAPS -->
+    <section id="venue">
+      <p class="section-eyebrow">Locations</p>
+      <h2 class="section-title">Meet us<br><em>where it begins.</em></h2>
+
+      <!-- Venue 1: Temple -->
+      <div class="venue-card">
+        <span style="font-size: 1.5rem;">🛕</span>
+        <p class="tamil-text" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); font-weight: 700; margin-top: 4px;">திருமண முகூர்த்த இடம் (காலை 9:00 – 10:00)[span_64](start_span)[span_64](end_span)</p>
+        <h3 class="tamil-text" style="font-size: 1.5rem; font-weight: 700; margin: 6px 0;">ஸ்ரீ சௌந்தரராஜ பெருமாள் திருக்கோயில்</h3>
+        <p class="tamil-text" style="font-size: 0.95rem; color: var(--text-muted);">தாடிக்கொம்பு, திண்டுக்கல்.</p>
+        <a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=Shri+Soundararraja+Perumal+Temple+Thadikombu+Dindigul" target="_blank" rel="noopener noreferrer">
+          Open Temple Location ↗
+        </a>
+      </div>
+
+      <!-- Venue 2: Mandapam -->
+      <div class="venue-card">
+        <span style="font-size: 1.5rem;">🏛️</span>
+        <p class="tamil-text" style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; color: var(--gold-dark); font-weight: 700; margin-top: 4px;">திருமண வரவேற்பு இடம் (மாலை 6:00 மணி முதல்)[span_65](start_span)[span_65](end_span)[span_66](start_span)[span_66](end_span)</p>
+        <h3 class="tamil-text" style="font-size: 1.5rem; font-weight: 700; margin: 6px 0;">தரகுமண்டி குமாஸ்தாக்கள் திருமண மண்டபம்[span_67](start_span)[span_67](end_span)[span_68](start_span)[span_68](end_span)</h3>
+        <p class="tamil-text" style="font-size: 0.95rem; color: var(--text-muted);">நந்தவனரோடு, திண்டுக்கல்.[span_69](start_span)[span_69](end_span)[span_70](start_span)[span_70](end_span)</p>
+        <a class="action-btn" href="https://www.google.com/maps/search/?api=1&query=Tharagu+Mandi+Gumasthakkal+Thirumana+Mandapam+Nandavana+Road+Dindigul" target="_blank" rel="noopener noreferrer">
+          Open Mandapam Location ↗
+        </a>
+      </div>
+    </section>
+
+    <!-- 9. CLOSING NOTE -->
+    <section>
+      <div style="font-size: 1.8rem; margin-bottom: 10px; color: var(--gold);">✿</div>
+      <p class="section-eyebrow tamil-text">நல்வரவு</p>
+      <h2 class="section-title tamil-text">தங்கள் நல்வருகையை நாடும்<br><em>மணமக்கள்[span_71](start_span)[span_71](end_span)[span_72](start_span)[span_72](end_span)</em></h2>
+      <p class="tamil-text" style="font-size: 1.45rem; font-weight: 700; color: var(--gold-dark); margin-top: 10px;">
+        S. மணிகண்டன் & A. தர்ஷனா[span_73](start_span)[span_73](end_span)[span_74](start_span)[span_74](end_span)
+      </p>
+    </section>
+  </main>
+
+  <!-- Lightbox Modal -->
+  <div id="imageModal" onclick="this.style.display='none'">
+    <img id="modalImg" src="" alt="Enlarged moment" />
+  </div>
+
+  <!-- Background Music Audio Tag -->
+  <audio id="bgMusic" loop preload="none">
+    <source src="music.mp3" type="audio/mpeg">
+    <source src="https://commondatastorage.googleapis.com/codeskulptor-demos/riceracer_assets/music/menu.ogg" type="audio/ogg">
+  </audio>
+
+  <!-- Floating Audio Button -->
+  <button id="audioToggle" aria-label="Toggle background music">🪕</button>
+
+  <footer class="tamil-text">
+    S. மணிகண்டன் & A. தர்ஷனா திருமண அழைப்பிதழ் ✦ 2026[span_75](start_span)[span_75](end_span)[span_76](start_span)[span_76](end_span)
+  </footer>
+
+  <script>
+    // 1. Live Countdown: 20 November 2026 at 09:00 AM
+    const weddingDate = new Date("November 20, 2026 09:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const diff = weddingDate - now;
+
+      if (diff > 0) {
+        document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        document.getElementById('minutes').innerText = Math.floor((diff / 1000 / 60) % 60);
+        document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
+      } else {
+        document.getElementById('days').innerText = '0';
+        document.getElementById('hours').innerText = '0';
+        document.getElementById('minutes').innerText = '0';
+        document.getElementById('seconds').innerText = '0';
+      }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // 2. Entrance Envelope & Music Play
+    const openBtn = document.getElementById('openInviteBtn');
+    const overlay = document.getElementById('introOverlay');
+    const bgMusic = document.getElementById('bgMusic');
+    const audioToggle = document.getElementById('audioToggle');
+
+    openBtn.addEventListener('click', () => {
+      overlay.classList.add('hidden');
+      bgMusic.play().then(() => {
+        audioToggle.classList.add('playing');
+        audioToggle.textContent = '🔊';
+      }).catch(() => {
+        audioToggle.textContent = '🪕';
+      });
+    });
+
+    audioToggle.addEventListener('click', () => {
+      if (bgMusic.paused) {
+        bgMusic.play();
+        audioToggle.classList.add('playing');
+        audioToggle.textContent = '🔊';
+      } else {
+        bgMusic.pause();
+        audioToggle.classList.remove('playing');
+        audioToggle.textContent = '🔇';
+      }
+    });
+
+    // 3. Scratch Card Effect
+    const canvas = document.getElementById('scratchCard');
+    const ctx = canvas.getContext('2d');
+
+    const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+    grad.addColorStop(0, '#d9b779');
+    grad.addColorStop(0.5, '#edd6aa');
+    grad.addColorStop(1, '#b58e4e');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = '#4a3718';
+    ctx.font = '600 13px "Noto Serif Tamil", sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('✨ தேய்த்து பார்க்கவும் (Scratch Here) ✨', canvas.width / 2, canvas.height / 2 + 5);
+
+    let isScratching = false;
+
+    function scratch(e) {
+      if (!isScratching) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+      const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.beginPath();
+      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    canvas.addEventListener('mousedown', () => isScratching = true);
+    window.addEventListener('mouseup', () => isScratching = false);
+    canvas.addEventListener('mousemove', scratch);
+    canvas.addEventListener('touchstart', () => isScratching = true);
+    window.addEventListener('touchend', () => isScratching = false);
+    canvas.addEventListener('touchmove', scratch);
+
+    // 4. Photo Gallery Lightbox
+    function openLightbox(item) {
+      const modal = document.getElementById('imageModal');
+      const modalImg = document.getElementById('modalImg');
+      modalImg.src = item.querySelector('img').src;
+      modal.style.display = 'flex';
+    }
+
+    // 5. Floating Petals Animation
+    const pCanvas = document.getElementById('petalsCanvas');
+    const pCtx = pCanvas.getContext('2d');
+    let width = pCanvas.width = window.innerWidth;
+    let height = pCanvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = pCanvas.width = window.innerWidth;
+      height = pCanvas.height = window.innerHeight;
+    });
+
+    const petals = Array.from({ length: 25 }, () => ({
+      x: Math.random() * width,
+      y: Math.random() * height - height,
+      size: Math.random() * 8 + 6,
+      speedY: Math.random() * 1.5 + 0.8,
+      speedX: Math.random() * 1 - 0.5,
+      rotation: Math.random() * 360,
+      spinSpeed: Math.random() * 2 - 1,
+      color: Math.random() > 0.4 ? 'rgba(230, 110, 125, 0.45)' : 'rgba(212, 175, 55, 0.4)'
+    }));
+
+    function renderPetals() {
+      pCtx.clearRect(0, 0, width, height);
+      petals.forEach(p => {
+        pCtx.save();
+        pCtx.translate(p.x, p.y);
+        pCtx.rotate((p.rotation * Math.PI) / 180);
+        pCtx.fillStyle = p.color;
+        pCtx.beginPath();
+        pCtx.ellipse(0, 0, p.size, p.size * 0.6, 0, 0, Math.PI * 2);
+        pCtx.fill();
+        pCtx.restore();
+
+        p.y += p.speedY;
+        p.x += Math.sin(p.y * 0.01) * 0.8 + p.speedX;
+        p.rotation += p.spinSpeed;
+
+        if (p.y > height + 20) {
+          p.y = -20;
+          p.x = Math.random() * width;
+        }
+      });
+      requestAnimationFrame(renderPetals);
+    }
+    renderPetals();
+  </script>
+</body>
+</html>
